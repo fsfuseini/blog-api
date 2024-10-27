@@ -11,7 +11,7 @@ usersRouter.post("/users/login", loginUser);
 
 usersRouter.post("/users/logout", logoutUser);
 
-usersRouter.get("/users/profile", getUserProfile);
+usersRouter.get("/users/me", getUserProfile);
 
 usersRouter.patch("/users/profile", updateUserProfile);
 

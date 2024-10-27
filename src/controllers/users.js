@@ -77,7 +77,15 @@ try {
     const { error, value } = updateUserValidator.validate(req.body);
     if (error) {
         return res.status(422).json(error);
-    }
+    };
+    // Find authenticated user from database
+    const user = await UserModel
+        .findById(req.auth.id)
+        .select({ password: false });
+    // Update user profile
+    await user.updateOne({ $set: value });
+    // Send response
+    res.json({ message: "User profile updated successfully" });
 } catch (error) {
     next(error);
 }};

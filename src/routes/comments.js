@@ -11,7 +11,7 @@ commentsRouter.get("/comments", getComments);
 
 commentsRouter.get("/comments/:id", getComment);
 
-commentsRouter.put("/comments/:id", updateComment);
+commentsRouter.patch("/comments/:id", updateComment);
 
 commentsRouter.delete("/comments/:id", deleteComment);
 

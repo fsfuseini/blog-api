@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import toJSON from "@reis/mongoose-to-json";
+import {toJSON} from "@reis/mongoose-to-json";
 
 // Define the article schema
 const articleSchema = new Schema({
@@ -14,6 +14,4 @@ const articleSchema = new Schema({
 articleSchema.plugin(toJSON);
 
 // Create the article model
-const ArticleModel = model("Article", articleSchema);
-
-export default ArticleModel;
+export const ArticleModel = model("Article", articleSchema);

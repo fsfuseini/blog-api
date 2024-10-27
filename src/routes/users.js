@@ -13,6 +13,6 @@ usersRouter.post("/users/logout", logoutUser);
 
 usersRouter.get("/users/profile", getUserProfile);
 
-usersRouter.put("/users/profile", updateUserProfile);
+usersRouter.patch("/users/profile", updateUserProfile);
 
 export default usersRouter;

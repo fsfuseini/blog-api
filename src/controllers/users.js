@@ -1,9 +1,13 @@
-import { registerUserValidator, loginUserValidator, updateUserValidator } from "../validators/users.js"; //Import validators
+import {
+    registerUserValidator,
+    loginUserValidator,
+    updateUserValidator,
+} from "../validators/users.js"; //Import validators
 import { UserModel } from "../models/users.js"; //Import user model
-import jwt from "jsonwebtoken"; //Import jwt
 import bcrypt from "bcrypt"; //Import bcrypt
+import jwt from "jsonwebtoken"; //Import jwt
 
-export const registerUser = async (req, res) => {
+export const registerUser = async (req, res, next) => {
     try {
         //  Validate user input
         const { error, value } = registerUserValidator.validate(req.body);
@@ -26,7 +30,7 @@ export const registerUser = async (req, res) => {
     }
 };
 
-export const loginUser = async (req, res) => {
+export const loginUser = async (req, res, next) => {
  try {
     //  Validate user input
     const { error, value } = loginUserValidator.validate(req.body);
@@ -44,7 +48,10 @@ export const loginUser = async (req, res) => {
         return res.status(400).json({ message: "Invalid email or password" });
      }
      //  Generate token for the user
-     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+     const token = jwt.sign(
+         { id: user.id },
+         process.env.JWT_SECRET_KEY,
+         { expiresIn: "1h" });
      //  Send response
     res.json({ message: "User logged in successfully", accessToken: token });
  } catch (error) {
@@ -52,19 +59,19 @@ export const loginUser = async (req, res) => {
  }
 };
 
-export const getUserProfile = async (req, res) => {
+export const getUserProfile = async (req, res, next) => {
     try {
         // Find authenticated user from database
         const user = await UserModel
             .findById(req.auth.id)
-            .select({password: 0});
+            .select({password: false});
         // Send response
         res.json(user);
     } catch (error) {
     next(error);
 }};
 
-export const updateUserProfile = async (req, res) => {
+export const updateUserProfile = async (req, res, next) => {
 try {
     // Validate user input  
     const { error, value } = updateUserValidator.validate(req.body);
@@ -75,6 +82,6 @@ try {
     next(error);
 }};
 
-export const logoutUser = async (req, res) => {
+export const logoutUser = async (req, res, next) => {
   res.json({ message: "User logged out successfully" });
 };

@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import toJSON from "@reis/mongoose-to-json";
+import {toJSON} from "@reis/mongoose-to-json";
 
 // Define the comment schema
 const commentSchema = new Schema({
@@ -13,6 +13,4 @@ const commentSchema = new Schema({
 commentSchema.plugin(toJSON);
 
 // Create the comment model
-const CommentModel = model("Comment", commentSchema);
-
-export default CommentModel;
+export  const CommentModel = model("Comment", commentSchema);

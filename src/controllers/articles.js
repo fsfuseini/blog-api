@@ -19,18 +19,44 @@ export const createArticle = async (req, res) => {
 };
 
 export const getArticles = async (req, res) => {
-  res.json({ message: "Articles fetched successfully" });
+  try {
+    const { filter = "{}", limit = 10, skip = 0 } = req.query;
+    // Fetch articles from database
+    const articles = await ArticleModel
+      .find(JSON.parse(filter))
+      .limit(parseInt(limit))
+      .skip(parseInt(skip));
+    // Return articles
+   res.status(200).json(articles);  
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const getArticle = async (req, res) => {
-  res.json({ message: "Article fetched successfully" });
+ try {
+    const article = await ArticleModel.findById(req.params.id);
+    res.status(200).json(article);
+ } catch (error) {
+    next(error);
+ }
 };
 
 export const updateArticle = async (req, res) => {
-  res.json({ message: "Article updated successfully" });
+  try {
+    const article = await ArticleModel.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    res.status(200).json(article);
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const deleteArticle = async (req, res) => {
-  res.json({ message: "Article deleted successfully" });
+  try {
+    await ArticleModel.findByIdAndDelete(req.params.id);
+    res.status(200).json({message: "Article deleted successfully"});
+  } catch (error) {
+    next(error);
+  }
 };
 

@@ -11,7 +11,7 @@ articlesRouter.get("/articles", getArticles);
 
 articlesRouter.get("/articles/:id", getArticle);
 
-articlesRouter.put("/articles/:id", updateArticle);
+articlesRouter.patch("/articles/:id", updateArticle);
 
 articlesRouter.delete("/articles/:id", deleteArticle);
 

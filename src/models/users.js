@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import toJSON from "@reis/mongoose-to-json";
+import {toJSON} from "@reis/mongoose-to-json";
 
 // Define the user schema
 const userSchema = new Schema({
@@ -14,6 +14,4 @@ const userSchema = new Schema({
 userSchema.plugin(toJSON);
 
 // Create the user model
-const UserModel = model("User", userSchema);
-
-export default UserModel;
+export const UserModel = model("User", userSchema);
